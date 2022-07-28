@@ -11,7 +11,7 @@ import collection.JavaConverters._
 import java.util
 import Array.*
 
-// In dit spel maken we één level met alle funcitonaliteit aanwezig
+// In dit spel maken we één level met alle functionaliteit aanwezig
 class Level(grid: GridPanel) {
 
   val pushCell: PushCell = new PushCell(grid)
@@ -21,47 +21,24 @@ class Level(grid: GridPanel) {
   val generatorCell: Generator = new Generator(grid)
   val enemyCell: Enemy = new Enemy(grid)
 
-  val matrixRows: Int = grid.getRows
-  val matrixCols: Int = grid.getColumns
+  val gameMatrix: GameMatrix = new GameMatrix(grid, grid.getRows, grid.getColumns)
 
-  // representatie van het speelveld
-  var gameMatrix = ofDim[Cell](grid.getRows, grid.getColumns)
-  for (i <- 0 to matrixRows-1) {
-    for ( j <- 0 to matrixCols-1) {
-      gameMatrix(i)(j) = getCorrespondingCell(j, i);
-    }
-  }
 
-  for (i <- 0 to matrixRows-1) {
+  /*for (i <- 0 to matrixRows-1) {
     for ( j <- 0 to matrixCols-1) {
       print(" " + gameMatrix(i)(j));
     }
     println();
-  }
-
-  // geeft de cel in 'cells' terug die overeenkomt met de x en y
-  // anders geeft deze een EmptyCell terug
-  def getCorrespondingCell(x: Int, y: Int): Cell =
-    val cells: List[Cell] = grid.getCells.asScala.toList
-    for (n <- cells) {
-      if n.x == x && n.y == y then
-        return n
-    }
-    var emptyCell: Cell = new EmptyCell(grid)
-    emptyCell.x = x
-    emptyCell.y = y
-    grid.addCells(List(emptyCell).asJava)
-    emptyCell
+  }*/
 
   // alle duwcellen 1 iteratie volgens hun richting laten bewegen
   def movePushCells(): Unit = {
-    for (i <- 0 to matrixRows-1) {
-      for ( j <- 0 to matrixCols-1) {
-        if gameMatrix(i)(j).isInstanceOf[PushCell] &&
-        j < grid.getRows then
+    for (i <- 0 until gameMatrix.getRows()) {
+      for ( j <- 0 until gameMatrix.getColumns()) {
+        if gameMatrix.isPushCell(j, i) && j < grid.getColumns then
           var emptyCell: EmptyCell = new EmptyCell(grid)
-          emptyCell.x = gameMatrix(i)(j).x
-          emptyCell.y = gameMatrix(i)(j).y
+          emptyCell.x = gameMatrix.getPosX(j, i)
+          emptyCell.y = gameMatrix.getPosY(j, i)
           //grid.removeCell(gameMatrix(i)(j))
           grid.addCells(List(emptyCell).asJava)
           gameMatrix(i)(j).asInstanceOf[Pushable].move(gameMatrix(i)(j).direction, gameMatrix(i)(j))

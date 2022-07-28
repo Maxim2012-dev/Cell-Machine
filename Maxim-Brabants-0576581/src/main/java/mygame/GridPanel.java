@@ -146,7 +146,7 @@ public class GridPanel extends JPanel {
     }
 
     /**
-     * Hertekend het volledig venster gegeven de cellen
+     * Hertekent het volledig venster gegeven de cellen
      */
     public void repaintCells() {
         mGraphics.clearRect(0, 0, windowWidth, windowHeight);
