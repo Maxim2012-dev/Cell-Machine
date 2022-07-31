@@ -3,11 +3,12 @@ package game
 import mygame.GridPanel
 
 import scala.Array.ofDim
+import scala.reflect.ClassTag
 
 // representatie van het speelveld
-class GameMatrix (grid: GridPanel, rows: Int, cols: Int){
+class GameMatrix[T:ClassTag](grid: GridPanel, rows: Int, cols: Int){
 
-  private var gameMatrix = ofDim[Cell](rows, cols)
+  private var gameMatrix = ofDim[T](rows, cols)
 
   for (i <- 0 until rows) {
     for (j <- 0 until cols) {
@@ -17,13 +18,13 @@ class GameMatrix (grid: GridPanel, rows: Int, cols: Int){
 
   // geeft de cel in 'cells' terug die overeenkomt met de x en y
   // anders geeft deze een EmptyCell terug
-  def getCorrespondingCell(x: Int, y: Int): Cell =
-    val cells: List[Cell] = grid.getCells.asScala.toList
+  def getCorrespondingCell(x: Int, y: Int): T =
+    val cells: List[T] = grid.getCells
     for (n <- cells) {
       if n.x == x && n.y == y then
         return n
     }
-    var emptyCell: Cell = new EmptyCell(grid)
+    var emptyCell: T = new EmptyCell(grid)
     emptyCell.x = x
     emptyCell.y = y
     grid.addCells(List(emptyCell).asJava)

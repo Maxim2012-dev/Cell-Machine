@@ -21,7 +21,8 @@ class Level(grid: GridPanel) {
   val generatorCell: Generator = new Generator(grid)
   val enemyCell: Enemy = new Enemy(grid)
 
-  val gameMatrix: GameMatrix = new GameMatrix(grid, grid.getRows, grid.getColumns)
+  // game matrix van type 'Cell'
+  val gameMatrix: GameMatrix[Cell] = new GameMatrix[Cell](grid, grid.getRows, grid.getColumns)
 
 
   /*for (i <- 0 to matrixRows-1) {
