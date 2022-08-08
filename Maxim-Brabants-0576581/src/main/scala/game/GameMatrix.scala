@@ -17,15 +17,17 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
 
   private var gameMatrix = ofDim[T](rows, cols)
 
-  def initializeNewCell[T <: Cell](cell: Cell) =
-    gameMatrix(cell.y)(cell.x) = cell
+  def initializeNewCell(cell: T) =
+    val (colIdx, rowIdx) : (Int, Int) = ImageDrawer.determineCellInMatrix(cell.x, cell.y, grid)
+    gameMatrix(rowIdx)(colIdx) = cell
 
   def getCellOnPos(x: Int, y: Int): Cell =
     gameMatrix(y)(x)
 
   // laat de cel op positie (x, y) bewegen en update de matrix
   def moveCell(x: Int, y: Int, emptyCell: EmptyCell) =
-    gameMatrix(y)(x).move(gameMatrix(y)(x).direction, gameMatrix(y)(x))
+    println("Moved cell...")
+    //gameMatrix(y)(x).move(gameMatrix(y)(x).direction, gameMatrix(y)(x))
 
 
   // geeft de cel in 'cells' terug die overeenkomt met de x en y

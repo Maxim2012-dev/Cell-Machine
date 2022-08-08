@@ -4,10 +4,6 @@ import game.Cell;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +19,11 @@ public class GridPanel extends JPanel {
      * De lijst van cellen (intern)
      */
     private ArrayList<Cell> cells;
+    private ArrayList<game.Game_Button> buttons;
+
+    public Graphics2D getmGraphics() {
+        return mGraphics;
+    }
 
     /**
      * Een referentie naar de renderer waarmee we interessante figuren kunnen tekenen
@@ -117,6 +118,7 @@ public class GridPanel extends JPanel {
         this.rows = rows;
         this.columns = columns;
         cells = new ArrayList<>();
+        buttons = new ArrayList<>();
     }
 
     private void drawGrid() {
@@ -154,6 +156,9 @@ public class GridPanel extends JPanel {
         for (int i = 0; i < cells.size(); i++) {
             cells.get(i).draw(mGraphics);
         }
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).draw(mGraphics);
+        }
 
         this.repaint();
     }
@@ -163,6 +168,9 @@ public class GridPanel extends JPanel {
      */
     public void addCells(Iterable<Cell> cells) {
         cells.forEach(this.cells::add);
+    }
+    public void addButtons(Iterable<game.Game_Button> buttons) {
+        buttons.forEach(this.buttons::add);
     }
 
 }

@@ -24,7 +24,7 @@ class Level(grid: GridPanel) {
   // game matrix van type 'Cell'
   val gameMatrix: GameMatrix[Cell] = new GameMatrix[Cell](grid, grid.getRows, grid.getColumns)
 
-  val cells = grid.getCells.asScala.toList
+  val cells: List[Cell] = grid.getCells.asScala.toList
   for (current_cell <- cells) {
     gameMatrix.initializeNewCell(current_cell)
   }
@@ -47,11 +47,11 @@ class Level(grid: GridPanel) {
           gameMatrix.moveCell(j, i, emptyCell)
           //grid.removeCell(gameMatrix(i)(j))
           grid.addCells(List(emptyCell).asJava)
-          gameMatrix(i)(j).asInstanceOf[Pushable].move(gameMatrix(i)(j).direction, gameMatrix(i)(j))
+          /*gameMatrix(i)(j).asInstanceOf[Pushable].move(gameMatrix(i)(j).direction, gameMatrix(i)(j))
           gameMatrix(i)(j+1) = gameMatrix(i)(j)
           grid.removeCell(gameMatrix(i)(j+1))
           grid.addCells(List(gameMatrix(i)(j+1)).asJava)
-          gameMatrix(i)(j) = emptyCell
+          gameMatrix(i)(j) = emptyCell*/
       }
     }
   }
