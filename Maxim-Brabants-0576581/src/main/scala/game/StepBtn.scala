@@ -4,7 +4,7 @@ import mygame.GridPanel
 
 import java.awt.{Graphics2D, Image}
 
-class StepBtn(grid: GridPanel) extends Game_Button{
+class StepBtn(grid: GridPanel) extends GameButton{
 
   val image: Image = ImageLoader.loadImage("step.png")
   val screenX: Int = grid.cellWidth + 10

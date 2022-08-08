@@ -14,32 +14,52 @@ import Array.*
 // In dit spel maken we één level met alle functionaliteit aanwezig
 class Level(grid: GridPanel) {
 
-  val pushCell: PushCell = new PushCell(grid)
-  val rotatableCell: Rotatable = new Rotatable(grid)
-  val unrotatableCell: Unrotatable = new Unrotatable(grid)
-  val immovableCell: ImmovableCell = new ImmovableCell(grid)
-  val generatorCell: Generator = new Generator(grid)
-  val enemyCell: Enemy = new Enemy(grid)
-
   // game matrix van type 'Cell'
   val gameMatrix: GameMatrix[Cell] = new GameMatrix[Cell](grid, grid.getRows, grid.getColumns)
+  var cell_selected: Boolean = false
+  var selectedCell: Cell = new EmptyCell(grid)
 
   val cells: List[Cell] = grid.getCells.asScala.toList
   for (current_cell <- cells) {
     gameMatrix.initializeNewCell(current_cell)
   }
 
-  /*for (i <- 0 to matrixRows-1) {
-    for ( j <- 0 to matrixCols-1) {
-      print(" " + gameMatrix(i)(j));
-    }
-    println();
-  }*/
+  for (i <- 0 until gameMatrix.getRows )
+    for ( j <- 0 until gameMatrix.getColumns )
+      print(" " + gameMatrix.getCellOnPos(i, j))
+    println()
+
+  def determineAction(xPos: Int, yPos: Int): Unit =
+    if cell_selected then
+      replaceCell(xPos, yPos)
+      cell_selected = false
+    else
+      selectCell(xPos, yPos)
+      cell_selected = true
+
+  def replaceCell(xPos: Int, yPos: Int): Unit =
+    val (col, row): (Int, Int) = ImageDrawer.determineCellInMatrix(xPos, yPos, grid)
+    if gameMatrix.getCellOnPos(col, row).isSelected then
+      selectedCell = new EmptyCell(grid)
+      println("Already selected this cell!")
+    else if !gameMatrix.isCellOfType(col, row, EmptyCell) then
+      selectedCell = new EmptyCell(grid)
+      println("Cell can't be placed here!")
+    else
+      gameMatrix.moveCell()
+        
+    println("col: " + col + " row: " + row)
+
+  def selectCell(xPos: Int, yPos: Int): Unit =
+    val (col, row): (Int, Int) = ImageDrawer.determineCellInMatrix(xPos, yPos, grid)
+    selectedCell = gameMatrix.getCellOnPos(col, row)
+    selectedCell.isSelected = true
+
 
   // alle duwcellen 1 iteratie volgens hun richting laten bewegen
-  def movePushCells(): Unit = {
-    for (i <- 0 until gameMatrix.getRows()) {
-      for ( j <- 0 until gameMatrix.getColumns()) {
+  def movePushCells(): Unit =
+    for (i <- 0 until gameMatrix.getRows )
+      for ( j <- 0 until gameMatrix.getColumns )
         if gameMatrix.isPushCell(j, i) && j < grid.getColumns then
           var emptyCell: EmptyCell = new EmptyCell(grid)
           emptyCell.x = j
@@ -52,9 +72,6 @@ class Level(grid: GridPanel) {
           grid.removeCell(gameMatrix(i)(j+1))
           grid.addCells(List(gameMatrix(i)(j+1)).asJava)
           gameMatrix(i)(j) = emptyCell*/
-      }
-    }
-  }
 
   // Mondelinge toelichting van ontbrekende functionaliteit:
   // Als een pushcell dan een andere cel raakt die beweegbaar is, dan moet de moveprocedure opgeroepen worden met de cel die geraakt wordt.

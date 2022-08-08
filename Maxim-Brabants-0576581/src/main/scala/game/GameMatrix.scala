@@ -17,17 +17,20 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
 
   private var gameMatrix = ofDim[T](rows, cols)
 
-  def initializeNewCell(cell: T) =
+  def initializeNewCell(cell: T): Unit =
     val (colIdx, rowIdx) : (Int, Int) = ImageDrawer.determineCellInMatrix(cell.x, cell.y, grid)
     gameMatrix(rowIdx)(colIdx) = cell
 
-  def getCellOnPos(x: Int, y: Int): Cell =
+  def getCellOnPos(x: Int, y: Int): T =
     gameMatrix(y)(x)
 
-  // laat de cel op positie (x, y) bewegen en update de matrix
-  def moveCell(x: Int, y: Int, emptyCell: EmptyCell) =
+  // verplaatsen van een cel in de matrix (positie cel aanpassen + matrix updaten)
+  def moveCell(cell: T, x: Int, y: Int): Unit =
+    gameMatrix(cell.y)(cell.x) = new EmptyCell(grid)
+    gameMatrix(y)(x) = cell
+    cell.x = x
+    cell.y = y
     println("Moved cell...")
-    //gameMatrix(y)(x).move(gameMatrix(y)(x).direction, gameMatrix(y)(x))
 
 
   // geeft de cel in 'cells' terug die overeenkomt met de x en y
@@ -40,14 +43,14 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
     grid.addCells(List(emptyCell).asJava)
     emptyCell*/
   
-  def isPushCell(x: Int, y: Int): Boolean =
+  def isCellOfType[T <: Cell](x: Int, y: Int, cellType: T): Boolean =
     gameMatrix(y)(x) match {
-      case _: PushCell => true
+      case _: T => true
       case _ => false
     }
     
   
-  def getRows() = rows
-  def getColumns() = cols
+  def getRows: Int = rows
+  def getColumns: Int = cols
 
 }

@@ -10,7 +10,7 @@ object ImageDrawer {
       (row * grid.cellHeight) + grid.getPadding)
 
   def determineCellInMatrix(x: Int, y: Int, grid: GridPanel): (Int, Int) =
-    (x / grid.cellWidth, y / grid.cellHeight)
+    ((x / grid.cellWidth) - 1, (y / grid.cellHeight) - 1)
 
   def drawImage(image: Image, x: Int, y: Int, mGraphics: Graphics2D, grid: GridPanel) =
     mGraphics.drawImage(image, x, y, grid.cellWidth, grid.cellHeight, Color.GRAY, null)

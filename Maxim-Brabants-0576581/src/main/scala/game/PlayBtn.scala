@@ -4,7 +4,7 @@ import mygame.GridPanel
 
 import java.awt.{Graphics2D, Image}
 
-class PlayBtn(grid: GridPanel) extends Game_Button{
+class PlayBtn(grid: GridPanel) extends GameButton{
 
   val image: Image = ImageLoader.loadImage("play.png")
   val screenX = 0

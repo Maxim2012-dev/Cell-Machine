@@ -19,7 +19,7 @@ public class GridPanel extends JPanel {
      * De lijst van cellen (intern)
      */
     private ArrayList<Cell> cells;
-    private ArrayList<game.Game_Button> buttons;
+    private ArrayList<game.GameButton> buttons;
 
     public Graphics2D getmGraphics() {
         return mGraphics;
@@ -169,7 +169,7 @@ public class GridPanel extends JPanel {
     public void addCells(Iterable<Cell> cells) {
         cells.forEach(this.cells::add);
     }
-    public void addButtons(Iterable<game.Game_Button> buttons) {
+    public void addButtons(Iterable<game.GameButton> buttons) {
         buttons.forEach(this.buttons::add);
     }
 
