@@ -22,6 +22,8 @@ object Game:
           println("Play button pressed")
         else if e.getX / grid.cellWidth == 1 && e.getY / grid.cellHeight == 6 then
           level.movePushCells()
+        else if e.getX / grid.cellWidth > 0 && e.getY / grid.cellHeight < 6 then  // Clicked on a cell
+          println("Pressed within field")
 
       override def mousePressed(e: MouseEvent): Unit = ()
 
