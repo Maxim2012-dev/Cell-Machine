@@ -1,17 +1,13 @@
 package game
 
 import java.awt.{Color, Graphics2D, Rectangle}
-import mygame.GridPanel
-import game.Pushable
 
-class Rotatable(grid: GridPanel) extends Cell, Pushable {
-  
-  val image = ImageLoader.loadImage("spinner.png")
-  var x: Int = 1
-  var y: Int = 3
-  var direction: String = "right"
-
-  override def draw(g: Graphics2D): Unit =
-    val (screenX: Int, screenY: Int) = ImageDrawer.determineCellOnScreen(x, y, grid)
-    ImageDrawer.drawImage(image, screenX, screenY, g, grid)
+trait Rotatable {
+  var direction: String
+  def draw(g: Graphics2D): Unit
+  def move(direction: String, cell: Cell): Unit =
+    if direction == "up" then cell.direction = "right"
+    else if direction == "right" then cell.direction = "down"
+    else if direction == "down" then cell.direction = "left"
+    else if direction == "left" then cell.direction = "up"
 }

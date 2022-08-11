@@ -1,6 +1,7 @@
 package mygame;
 
 import game.Cell;
+import game.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,6 +69,12 @@ public class GridPanel extends JPanel {
     /**
      * Vraag de padding op
      */
+
+    public boolean markedCell = false;
+    public int markedCellX;
+    public int markedCellY;
+
+
     public int getPadding() {
         return padding;
     }
@@ -126,6 +133,10 @@ public class GridPanel extends JPanel {
             for (int j = 0; j < rows; j++) {
                 Rectangle rect = new Rectangle(padding + i*cellWidth, padding + j*cellHeight, cellWidth, cellHeight);
                 mGraphics.draw(rect);
+                if (markedCell && i == markedCellY && j == markedCellX) {
+                    Image image = ImageLoader.loadImage("pixel-border.png");
+                    mGraphics.drawImage(image, padding + i*cellWidth, padding + j*cellHeight, cellWidth, cellHeight, Color.GRAY, null);
+                }
             }
         }
     }
@@ -137,6 +148,17 @@ public class GridPanel extends JPanel {
     
     public void removeCell(Cell cell) {
         cells.remove(cell);
+    }
+    public void markCell(int xPos, int yPos) {
+        markedCell = true;
+        markedCellX = xPos;
+        markedCellY = yPos;
+    }
+
+    public void unmarkCell() {
+        markedCell = false;
+        markedCellX = 0;
+        markedCellY = 0;
     }
 
     @Override

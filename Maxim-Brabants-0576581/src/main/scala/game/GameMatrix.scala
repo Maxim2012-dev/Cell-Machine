@@ -15,35 +15,31 @@ import scala.jdk.CollectionConverters.IterableHasAsJava
 // representatie van het speelveld
 class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
 
-  private var gameMatrix = ofDim[T](rows, cols)
+  private var gameMatrix = ofDim[Cell](rows, cols)
+
+  // lege plaatsen in matrix opvullen met lege cellen
+  def addRemainingCells(): Unit =
+    for (i <- 0 until getRows)
+      for (j <- 0 until getColumns)
+        if gameMatrix(i)(j) == null then gameMatrix(i)(j) = new EmptyCell(grid, j, i)
 
   def initializeNewCell(cell: T): Unit =
     val (colIdx, rowIdx) : (Int, Int) = ImageDrawer.determineCellInMatrix(cell.x, cell.y, grid)
     gameMatrix(rowIdx)(colIdx) = cell
 
-  def getCellOnPos(x: Int, y: Int): T =
+  def getCellOnPos(x: Int, y: Int): Cell =
     gameMatrix(y)(x)
 
   // verplaatsen van een cel in de matrix (positie cel aanpassen + matrix updaten)
-  def moveCell(cell: T, x: Int, y: Int): Unit =
-    gameMatrix(cell.y)(cell.x) = new EmptyCell(grid)
+  def moveCell[T <: Cell](cell: T, x: Int, y: Int): Unit =
+    gameMatrix(cell.y)(cell.x) = new EmptyCell(grid, 0, 0)
     gameMatrix(y)(x) = cell
     cell.x = x
     cell.y = y
     println("Moved cell...")
 
-
-  // geeft de cel in 'cells' terug die overeenkomt met de x en y
-  // anders geeft deze een EmptyCell terug
-  /*def getCorrespondingCell(x: Int, y: Int): T =
-
-    var emptyCell = new EmptyCell(grid)
-    emptyCell.x = x
-    emptyCell.y = y
-    grid.addCells(List(emptyCell).asJava)
-    emptyCell*/
   
-  def isCellOfType[T <: Cell](x: Int, y: Int, cellType: T): Boolean =
+  def isCellOfType[T](x: Int, y: Int, cellType: T): Boolean =
     gameMatrix(y)(x) match {
       case _: T => true
       case _ => false

@@ -11,7 +11,7 @@ object Game:
   @main def run(): Unit =
     val gui = GUI(800, 500, 5, 8, 80)
     val grid = gui.getGridPanel
-    grid.addCells(List(PushCell(grid), Rotatable(grid), Unrotatable(grid), ImmovableCell(grid), Generator(grid), Enemy(grid)).asJava)
+    grid.addCells(List(PushCell(grid), RotateCell(grid), UnrotatableCell(grid), ImmovableCell(grid), GeneratorCell(grid), EnemyCell(grid)).asJava)
     grid.addButtons(List(PlayBtn(grid), StepBtn(grid)).asJava)
     val level = Level(grid)
     grid.repaint()

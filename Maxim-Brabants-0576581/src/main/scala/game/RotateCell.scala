@@ -1,14 +1,14 @@
 package game
 
-import java.awt.{Color, Graphics2D, Rectangle}
+import java.awt.{Color, Graphics2D, Image, Rectangle}
 import mygame.GridPanel
 import game.Pushable
 
-class Generator(grid: GridPanel) extends Cell, Pushable {
+class RotateCell(grid: GridPanel) extends Cell, Pushable {
   
-  val image = ImageLoader.loadImage("generator.png");
-  var x: Int = 5
-  var y: Int = 1
+  val image: Image = ImageLoader.loadImage("spinner.png")
+  var x: Int = 1
+  var y: Int = 3
   var direction: String = "right"
 
   override def draw(g: Graphics2D): Unit =
