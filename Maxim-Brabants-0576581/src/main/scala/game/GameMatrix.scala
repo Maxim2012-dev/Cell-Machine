@@ -24,15 +24,14 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
         if gameMatrix(i)(j) == null then gameMatrix(i)(j) = new EmptyCell(grid, j, i)
 
   def initializeNewCell(cell: T): Unit =
-    val (colIdx, rowIdx) : (Int, Int) = ImageDrawer.determineCellInMatrix(cell.x, cell.y, grid)
-    gameMatrix(rowIdx)(colIdx) = cell
+    gameMatrix(cell.y)(cell.x) = cell
 
   def getCellOnPos(x: Int, y: Int): Cell =
     gameMatrix(y)(x)
 
   // verplaatsen van een cel in de matrix (positie cel aanpassen + matrix updaten)
   def moveCell[T <: Cell](cell: T, x: Int, y: Int): Unit =
-    gameMatrix(cell.y)(cell.x) = new EmptyCell(grid, 0, 0)
+    gameMatrix(cell.y)(cell.x) = new EmptyCell(grid, cell.x, cell.y)
     gameMatrix(y)(x) = cell
     cell.x = x
     cell.y = y
@@ -45,6 +44,11 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
       case _ => false
     }
     
+  def printMatrix(): Unit =
+    for (i <- 0 until getRows)
+      for (j <- 0 until getColumns)
+        print(gameMatrix(i)(j))
+      println()  
   
   def getRows: Int = rows
   def getColumns: Int = cols

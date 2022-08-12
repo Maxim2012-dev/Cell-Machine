@@ -48,16 +48,15 @@ class Level(grid: GridPanel) {
       println("Cell can't be placed here!")
     else
       gameMatrix.moveCell(selectedCell, col, row)
-    grid.unmarkCell()  
-    println("col: " + col + " row: " + row)
+    grid.unmarkCell()
 
   def selectCell(xPos: Int, yPos: Int): Unit =
     val (col, row): (Int, Int) = ImageDrawer.determineCellInMatrix(xPos, yPos, grid)
-    println("X-screen: " + xPos + " X-idx: " + col)
-    println("Y-screen: " + yPos + " Y-idx: " + row)
-    selectedCell = gameMatrix.getCellOnPos(col, row)
-    selectedCell.isSelected = true
-    grid.markCell(xPos, yPos)
+    if !gameMatrix.isCellOfType(col, row, new EmptyCell(grid, 0, 0)) then
+      selectedCell = gameMatrix.getCellOnPos(col, row)
+      selectedCell.isSelected = true
+      grid.markCell(col, row)
+    else println("Can't select an empty cell...")  
  
 
   // alle duwcellen 1 iteratie volgens hun richting laten bewegen

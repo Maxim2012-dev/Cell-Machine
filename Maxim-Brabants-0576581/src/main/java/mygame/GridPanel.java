@@ -1,6 +1,7 @@
 package mygame;
 
 import game.Cell;
+import game.ImageDrawer;
 import game.ImageLoader;
 
 import javax.swing.*;
@@ -71,8 +72,9 @@ public class GridPanel extends JPanel {
      */
 
     public boolean markedCell = false;
-    public int markedCellX;
-    public int markedCellY;
+    public int xScreen;
+    public int yScreen;
+    public Image markedImage = ImageLoader.loadImage("red-border.png");
 
 
     public int getPadding() {
@@ -133,10 +135,6 @@ public class GridPanel extends JPanel {
             for (int j = 0; j < rows; j++) {
                 Rectangle rect = new Rectangle(padding + i*cellWidth, padding + j*cellHeight, cellWidth, cellHeight);
                 mGraphics.draw(rect);
-                if (markedCell && i == markedCellY && j == markedCellX) {
-                    Image image = ImageLoader.loadImage("pixel-border.png");
-                    mGraphics.drawImage(image, padding + i*cellWidth, padding + j*cellHeight, cellWidth, cellHeight, Color.GRAY, null);
-                }
             }
         }
     }
@@ -149,16 +147,16 @@ public class GridPanel extends JPanel {
     public void removeCell(Cell cell) {
         cells.remove(cell);
     }
-    public void markCell(int xPos, int yPos) {
+    public void markCell(int col, int row) {
         markedCell = true;
-        markedCellX = xPos;
-        markedCellY = yPos;
+        xScreen = ImageDrawer.getXOnScreen(col, this);
+        yScreen = ImageDrawer.getYOnScreen(row, this);
     }
 
     public void unmarkCell() {
         markedCell = false;
-        markedCellX = 0;
-        markedCellY = 0;
+        xScreen = 0;
+        yScreen = 0;
     }
 
     @Override
@@ -178,10 +176,12 @@ public class GridPanel extends JPanel {
         for (int i = 0; i < cells.size(); i++) {
             cells.get(i).draw(mGraphics);
         }
+        if (markedCell) {
+            mGraphics.drawImage(markedImage, xScreen, yScreen, cellWidth, cellHeight, null);
+        }
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).draw(mGraphics);
         }
-
         this.repaint();
     }
 
