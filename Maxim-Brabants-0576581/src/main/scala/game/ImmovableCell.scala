@@ -4,11 +4,11 @@ import java.awt.{Color, Graphics2D, Image, Rectangle}
 import mygame.GridPanel
 import game.Pushable
 
-class ImmovableCell(grid: GridPanel) extends Cell {
+class ImmovableCell(grid: GridPanel, xPos: Int, yPos: Int) extends Cell {
 
   val image: Image = ImageLoader.loadImage("immobile.png");
-  var x: Int = 5
-  var y: Int = 2
+  var x: Int = xPos
+  var y: Int = yPos
   var direction: String = "none"
 
   override def draw(g: Graphics2D): Unit =

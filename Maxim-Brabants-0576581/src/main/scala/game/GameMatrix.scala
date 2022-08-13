@@ -35,14 +35,12 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
     gameMatrix(y)(x) = cell
     cell.x = x
     cell.y = y
+    cell.isSelected = false
     println("Moved cell...")
 
-  
-  def isCellOfType[T](x: Int, y: Int, cellType: T): Boolean =
-    gameMatrix(y)(x) match {
-      case _: T => true
-      case _ => false
-    }
+  def removeCell(x: Int, y: Int): Unit =
+    grid.removeCell(gameMatrix(y)(x))
+    gameMatrix(y)(x) = new EmptyCell(grid, x, y)
     
   def printMatrix(): Unit =
     for (i <- 0 until getRows)

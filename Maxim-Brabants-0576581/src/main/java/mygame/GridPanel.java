@@ -188,8 +188,8 @@ public class GridPanel extends JPanel {
     /**
      * Stel de nieuwe cellen in
      */
-    public void addCells(Iterable<Cell> cells) {
-        cells.forEach(this.cells::add);
+    public void addCells(Cell cell) {
+        cells.add(cell);
     }
     public void addButtons(Iterable<game.GameButton> buttons) {
         buttons.forEach(this.buttons::add);

@@ -4,11 +4,11 @@ import java.awt.{Color, Graphics2D, Image, Rectangle}
 import mygame.GridPanel
 import game.Pushable
 
-class GeneratorCell(grid: GridPanel) extends Cell, Pushable {
+class GeneratorCell(grid: GridPanel, xPos: Int, yPos: Int) extends Cell {
   
   val image: Image = ImageLoader.loadImage("generator.png");
-  var x: Int = 5
-  var y: Int = 1
+  var x: Int = xPos
+  var y: Int = yPos
   var direction: String = "right"
 
   override def draw(g: Graphics2D): Unit =

@@ -5,11 +5,11 @@ import game.Pushable
 
 import java.awt.{Graphics2D, Image}
 
-class EnemyCell(grid: GridPanel) extends Cell, Pushable {
+class EnemyCell(grid: GridPanel, xPos: Int, yPos: Int) extends Cell {
 
   val image: Image = ImageLoader.loadImage("enemy.png")
-  var x: Int = 7
-  var y: Int = 3
+  var x: Int = xPos
+  var y: Int = yPos
   var direction: String = "right"
 
   override def draw(g: Graphics2D): Unit =

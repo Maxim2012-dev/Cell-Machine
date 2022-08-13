@@ -6,11 +6,11 @@ import java.io.File
 import mygame.GridPanel
 import game.Pushable
 
-class PushCell(grid: GridPanel) extends Cell, Pushable {
+class PushCell(grid: GridPanel, xPos: Int, yPos: Int) extends Cell, Pushable {
   
   val image: Image = ImageLoader.loadImage("mover2.png")
-  var x: Int = 1
-  var y: Int = 2
+  var x: Int = xPos
+  var y: Int = yPos
   var direction: String = "right"
 
   override def draw(g: Graphics2D): Unit =

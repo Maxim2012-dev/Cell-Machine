@@ -11,18 +11,16 @@ object Game:
   @main def run(): Unit =
     val gui = GUI(800, 500, 5, 8, 80)
     val grid = gui.getGridPanel
-    grid.addCells(List(PushCell(grid), RotateCell(grid), UnrotatableCell(grid), ImmovableCell(grid), GeneratorCell(grid), EnemyCell(grid)).asJava)
-    grid.addButtons(List(PlayBtn(grid), StepBtn(grid)).asJava)
+    grid.addButtons(List(StepBtn(grid)).asJava)
     val level = Level(grid)
     grid.repaint()
     // Mouse listener for buttons
     grid.addMouseListener(new MouseListener {
       override def mouseClicked(e: MouseEvent): Unit =
         if e.getX / grid.cellWidth == 0 && e.getY / grid.cellHeight == 6 then
-          println("Play button pressed")
-        else if e.getX / grid.cellWidth == 1 && e.getY / grid.cellHeight == 6 then
           level.movePushCells()
-        else if e.getX / grid.cellWidth > 0 && e.getY / grid.cellHeight < 6 then  // Clicked on a cell
+        else if (e.getX / grid.cellWidth > 0 && e.getX / grid.cellWidth < grid.getColumns) &&
+                  (e.getY / grid.cellHeight > 0 && e.getY / grid.cellHeight < grid.getRows) then  // Clicked on a cell
           level.determineAction(e.getX, e.getY)
 
       override def mousePressed(e: MouseEvent): Unit = ()

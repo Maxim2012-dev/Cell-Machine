@@ -7,7 +7,7 @@ import java.awt.{Graphics2D, Image}
 class StepBtn(grid: GridPanel) extends GameButton{
 
   val image: Image = ImageLoader.loadImage("step.png")
-  val screenX: Int = grid.cellWidth + 10
+  val screenX: Int = 5
   val screenY: Int = grid.windowHeight - grid.cellHeight
   
   override def draw(g: Graphics2D): Unit =
