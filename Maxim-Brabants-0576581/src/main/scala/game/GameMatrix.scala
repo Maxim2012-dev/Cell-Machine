@@ -36,7 +36,6 @@ class GameMatrix[T <: Cell : ClassTag](grid: GridPanel, rows: Int, cols: Int){
     cell.x = x
     cell.y = y
     cell.isSelected = false
-    println("Moved cell...")
 
   def removeCell(x: Int, y: Int): Unit =
     grid.removeCell(gameMatrix(y)(x))

@@ -78,6 +78,7 @@ class Level(grid: GridPanel) {
           // Is het een push cell?
           case pushCell: PushCell =>
             if !pushCell.isMoved then
+              println("moving push cell")
               val (newX, newY) = pushCell.move(pushCell, gameMatrix)
               gameMatrix.moveCell(pushCell, newX, newY)
               pushCell.toggleMoved()
